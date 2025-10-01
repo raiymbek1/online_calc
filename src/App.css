@@ -1,0 +1,222 @@
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400; /* обычный текст */
+  background: #f5f6f8;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.calculator {
+  width: 800px; /* фиксированная ширина калькулятора */
+  max-width: 100%; /* чтобы не вылазило за экран на мобильных */
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+/* Уже есть wrapper для CustomSelect, но добавим фиксированную ширину */
+.custom-select-wrapper {
+  width: 100%; /* займет всю ширину калькулятора */
+}
+
+/* Убедимся, что раскрывающийся список не расширяет контейнер */
+.custom-options {
+  width: 100%; /* обязательно 100% родителя */
+  box-sizing: border-box;
+  white-space: nowrap; /* чтобы текст не переносился */
+  overflow: hidden;   /* обрезаем лишнее */
+  text-overflow: ellipsis; /* длинные опции показываются с "..." */
+}
+/* Заголовки калькулятора */
+h1 {
+  font-size: 24px;
+  font-weight: 700; /* жирный заголовок */
+  margin-bottom: 16px;
+  text-align: center;
+  color: #2a3b5d;
+}
+
+/* Результаты расчета */
+.result h2 {
+  font-weight: 500; /* medium */
+  font-size: 16px;
+  color: #2a3b5d;
+  margin-bottom: 12px;
+}
+/* Метки input и select */
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 500; /* medium */
+}
+
+select, input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Основная кнопка Рассчитать */
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 16px;
+  background: #147bac;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease; /* плавный переход */
+}
+
+button:hover {
+  background: #253d65;
+}
+
+/* Кнопка Сбросить */
+.button-group button:nth-child(2) {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.button-group button:nth-child(2):hover {
+  background: #cfcfcf;
+  color: #111;
+}
+/* RESULT BLOCK */
+/* loader */
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.loader-wrapper.hide {
+  opacity: 0;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* result block */
+.result {
+  position: relative;
+  margin-top: 24px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.result::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 8px 0 0 8px;
+  background-color: transparent;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  z-index: 1;
+}
+
+.result.show.success::before {
+  width: 6px;
+  background-color: #2563eb;
+}
+
+.result.show.error::before {
+  width: 6px;
+  background-color: #dc2626;
+}
+
+.result h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.result p {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.95);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.result.show p:nth-of-type(1) { transition-delay: 0.1s; }
+.result.show p:nth-of-type(2) { transition-delay: 0.2s; }
+.result.show p:nth-of-type(3) { transition-delay: 0.3s; }
+
+.result.show p {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.input-error {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #dc2626;
+  opacity: 0;
+  transform: translateY(-2px);
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 50px; /* расстояние до заголовка */
+  margin-top: 30px;
+}
+
+.logo {
+  max-width: 200px; /* или любой размер по твоему вкусу */
+  height: auto;
+}
+
+/* Добавляем стиль ошибки */
+.input-error-border {
+  border-color: #dc2626 !important; /* красный цвет */
+  background-color: #fee2e2; /* светло-красный фон */
+}
