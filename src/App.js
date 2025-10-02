@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import CustomSelect from "./CustomSelect";
 import logo from "./logo.png";
 import { FaCalculator, FaRedo } from "react-icons/fa";
+import jsPDF from "jspdf";
+import montserrat from "./fonts/Montserrat-Regular-normal";
+import montserratBold from "./fonts/Montserrat-Bold-normal";
 
 
 
@@ -20,6 +23,11 @@ export default function Calculator() {
   const [loading, setLoading] = useState(false);
   const [pokError, setPokError] = useState("");
   const [additionalLeave, setAdditionalLeave] = useState("");
+  const [logoVisible, setLogoVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setLogoVisible(true), 100); // через 100мс покажем
+  }, []);
 
   const vedOptions = {
     "Сельское, лесное и рыбное хозяйство": {
@@ -95,6 +103,78 @@ export default function Calculator() {
 
   const riskOptions = ["1 — допустимый", "2 — низкий", "3 — средний", "4 — высокий", "5 — очень высокий"];
 
+const handleDownloadPDF = () => {
+  const doc = new jsPDF();
+
+  // Логотип слева сверху
+  const img = new Image();
+  img.src = logo;
+  doc.addImage(img, "PNG", 10, 10, 50, 10);
+
+  // Подключаем шрифты
+  doc.addFileToVFS("Montserrat-Regular.ttf", montserrat);
+  doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
+  doc.addFileToVFS("Montserrat-Bold.ttf", montserratBold);
+  doc.addFont("Montserrat-Bold.ttf", "Montserrat", "bold");
+
+  // Дата и время в правом верхнем углу
+  const today = new Date();
+  const dateStr = today.toLocaleDateString("ru-RU");
+  const timeStr = today.toLocaleTimeString("ru-RU");
+  doc.setFont("Montserrat", "normal");
+  doc.setFontSize(12);
+  doc.text(`Дата: ${dateStr} ${timeStr}`, 150, 15);
+
+  // Заголовок ниже логотипа
+  const headerY = 45;
+  doc.setFont("Montserrat", "bold");
+  doc.setFontSize(16);
+  doc.text("Результаты расчета объема гарантий", 20, headerY);
+
+  // Горизонтальная линия под заголовком
+  doc.setLineWidth(0.5);
+  doc.line(20, headerY + 2, 190, headerY + 2);
+
+  // Введённые данные
+  let y = headerY + 10;
+  doc.setFont("Montserrat", "bold");
+  doc.setFontSize(14);
+  doc.text("Введённые данные:", 20, y);
+
+  y += 8;
+  doc.setFont("Montserrat", "normal");
+  doc.setFontSize(12);
+  doc.text(`Степень профессионального риска: ${risk}`, 20, y); y += 7;
+  doc.text(`Вид экономической деятельности (ВЭД): ${ved}`, 20, y); y += 7;
+  if (subVed) {
+    doc.text(`Детализация ВЭД: ${subVed}`, 20, y); y += 7;
+  }
+  doc.text(`Повышающий отраслевой коэффициент (ПОК): ${pok}`, 20, y); y += 7;
+  doc.text(`Минимальная зарплата первого разряда: ${f}`, 20, y); y += 10;
+
+  // Подзаголовок "Результаты:"
+  doc.setFont("Montserrat", "bold");
+  doc.setFontSize(14);
+  doc.text("Результаты:", 20, y);
+
+  y += 8;
+  doc.setFont("Montserrat", "normal");
+  doc.setFontSize(12);
+  if (result) { doc.text(result, 20, y); y += 10; }
+  if (minStandard) { doc.text(minStandard, 20, y); y += 10; }
+  if (workTime) { doc.text(workTime, 20, y); y += 10; }
+  if (additionalLeave) { doc.text(additionalLeave, 20, y); y += 10; }
+
+  doc.save("result.pdf");
+};
+
+
+
+
+
+
+
+
   const handleCalculate = () => {
   if (!risk || !ved || !pok || !f) {
     setResult("Заполните все поля");
@@ -130,7 +210,7 @@ switch (A) {
 setAdditionalLeave(leaveText);
 
   const D2 = parseFloat(pok);
-if (D2 < 0 || D2 > 10) {
+if (isNaN(D2) || D2 < 0 || D2 > 4) {
   setResult("Проверьте значения ПОК");
   setWorkTime("");
   setMinStandard("");
@@ -193,8 +273,8 @@ if (D2 < 0 || D2 > 10) {
   return (
     <div className="calculator">
       <div className="logo-wrapper">
-        <img src={logo} alt="Логотип" className="logo" />
-      </div>
+  <img src={logo} alt="Логотип" className={`logo ${logoVisible ? "show" : ""}`} />
+</div>
       <h1>Онлайн-калькулятор расчета объема гарантий</h1>
 
       <div className="form-group">
@@ -277,6 +357,10 @@ if (D2 < 0 || D2 > 10) {
     <FaRedo style={{ marginRight: "8px" }} />
     Сбросить
   </button>
+  {showResult && !loading && (
+  <button onClick={handleDownloadPDF}>Скачать PDF</button>
+)}
+
 </div>
 
       {loading && <div className="loader-wrapper"><div className="loader"></div></div>}

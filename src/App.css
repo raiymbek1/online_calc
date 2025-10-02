@@ -1,8 +1,7 @@
-
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 400; /* обычный текст */
+  font-weight: 400;
   background: #f5f6f8;
 
   display: flex;
@@ -11,9 +10,10 @@ body {
   min-height: 100vh;
 }
 
+/* CALCULATOR */
 .calculator {
-  width: 800px; /* фиксированная ширина калькулятора */
-  max-width: 100%; /* чтобы не вылазило за экран на мобильных */
+  width: 800px;
+  max-width: 100%;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
@@ -22,40 +22,47 @@ body {
   margin-top: 20px;
 }
 
-/* Уже есть wrapper для CustomSelect, но добавим фиксированную ширину */
-.custom-select-wrapper {
-  width: 100%; /* займет всю ширину калькулятора */
+@media (max-width: 600px) {
+  .calculator {
+    width: 95%;
+    padding: 16px;
+  }
 }
 
-/* Убедимся, что раскрывающийся список не расширяет контейнер */
-.custom-options {
-  width: 100%; /* обязательно 100% родителя */
-  box-sizing: border-box;
-  white-space: nowrap; /* чтобы текст не переносился */
-  overflow: hidden;   /* обрезаем лишнее */
-  text-overflow: ellipsis; /* длинные опции показываются с "..." */
+/* CUSTOM SELECT */
+.custom-select-wrapper {
+  width: 100%;
 }
-/* Заголовки калькулятора */
+
+.custom-options {
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* HEADERS */
 h1 {
   font-size: 24px;
-  font-weight: 700; /* жирный заголовок */
+  font-weight: 700;
   margin-bottom: 16px;
   text-align: center;
   color: #2a3b5d;
 }
 
-/* Результаты расчета */
 .result h2 {
-  font-weight: 500; /* medium */
+  font-weight: 500;
   font-size: 16px;
   color: #2a3b5d;
   margin-bottom: 12px;
 }
-/* Метки input и select */
+
+/* LABELS + INPUTS */
 label {
   display: block;
   margin: 12px 0 6px;
-  font-weight: 500; /* medium */
+  font-weight: 500;
 }
 
 select, input {
@@ -64,9 +71,32 @@ select, input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-/* Общие стили кнопок */
+/* ERROR UNIVERSAL STYLE */
+.error {
+  border-color: #dc2626 !important;
+  background-color: #fee2e2 !important;
+}
+
+.input-error {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #dc2626;
+  opacity: 0;
+  transform: translateY(-2px);
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BUTTONS */
 button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -76,13 +106,15 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: 
-    background 0.3s ease, 
-    transform 0.2s ease, 
-    box-shadow 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-/* Кнопка Рассчитать */
+button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Рассчитать */
 .button-group button:first-child {
   background: linear-gradient(135deg, #147bac, #0d5c87);
   color: #fff;
@@ -100,7 +132,7 @@ button {
   box-shadow: 0 2px 6px rgba(20, 123, 172, 0.3);
 }
 
-/* Кнопка Сбросить */
+/* Сбросить */
 .button-group button:nth-child(2) {
   background: #f4f4f4;
   color: #444;
@@ -122,16 +154,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px; /* отступ между иконкой и текстом */
+  gap: 6px;
   font-size: 15px;
 }
+
 .button-group svg {
-  font-size: 18px; /* размер иконки */
+  font-size: 18px;
 }
 
-
-/* RESULT BLOCK */
-/* loader */
+/* LOADER */
 .loader-wrapper {
   display: flex;
   justify-content: center;
@@ -158,7 +189,7 @@ button {
   100% { transform: rotate(360deg); }
 }
 
-/* result block */
+/* RESULT BLOCK */
 .result {
   position: relative;
   margin-top: 24px;
@@ -210,7 +241,7 @@ button {
   line-height: 1.5;
   opacity: 0;
   transform: translateY(-8px) scale(0.95);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .result.show p:nth-of-type(1) { transition-delay: 0.1s; }
@@ -222,41 +253,23 @@ button {
   transform: translateY(0) scale(1);
 }
 
-.input-error {
-  margin-top: 4px;
-  font-size: 13px;
-  color: #dc2626;
-  opacity: 0;
-  transform: translateY(-2px);
-  animation: fadeIn 0.3s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* LOGO */
 .logo-wrapper {
   display: flex;
   justify-content: left;
-  margin-bottom: 50px; /* расстояние до заголовка */
+  margin-bottom: 50px;
   margin-top: 30px;
 }
 
 .logo {
-  max-width: 200px; /* или любой размер по твоему вкусу */
+  max-width: 200px;
   height: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Добавляем стиль ошибки */
-.input-error-border {
-  border-color: #dc2626 !important; /* красный цвет */
-  background-color: #fee2e2; /* светло-красный фон */
-}
-
-input.error {
-  border: 1px solid #dc2626 !important;
-  background: #fee2e2;
+.logo.show {
+  opacity: 1;
+  transform: translateY(0);
 }
