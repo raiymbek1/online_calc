@@ -1,16 +1,22 @@
 {
   "files": {
-    "main.css": "/online_calc/static/css/main.4efa3bb0.css",
-    "main.js": "/online_calc/static/js/main.1000cd96.js",
-    "static/js/453.66afefd5.chunk.js": "/online_calc/static/js/453.66afefd5.chunk.js",
+    "main.css": "/online_calc/static/css/main.0ce18e6f.css",
+    "main.js": "/online_calc/static/js/main.6ee4f21b.js",
+    "static/js/239.ed6d8879.chunk.js": "/online_calc/static/js/239.ed6d8879.chunk.js",
+    "static/js/977.12161e75.chunk.js": "/online_calc/static/js/977.12161e75.chunk.js",
+    "static/js/455.b1a86b72.chunk.js": "/online_calc/static/js/455.b1a86b72.chunk.js",
+    "static/js/453.f72acb19.chunk.js": "/online_calc/static/js/453.f72acb19.chunk.js",
     "static/media/logo.png": "/online_calc/static/media/logo.6af0ce2d8eb0c89fd059.png",
     "index.html": "/online_calc/index.html",
-    "main.4efa3bb0.css.map": "/online_calc/static/css/main.4efa3bb0.css.map",
-    "main.1000cd96.js.map": "/online_calc/static/js/main.1000cd96.js.map",
-    "453.66afefd5.chunk.js.map": "/online_calc/static/js/453.66afefd5.chunk.js.map"
+    "main.0ce18e6f.css.map": "/online_calc/static/css/main.0ce18e6f.css.map",
+    "main.6ee4f21b.js.map": "/online_calc/static/js/main.6ee4f21b.js.map",
+    "239.ed6d8879.chunk.js.map": "/online_calc/static/js/239.ed6d8879.chunk.js.map",
+    "977.12161e75.chunk.js.map": "/online_calc/static/js/977.12161e75.chunk.js.map",
+    "455.b1a86b72.chunk.js.map": "/online_calc/static/js/455.b1a86b72.chunk.js.map",
+    "453.f72acb19.chunk.js.map": "/online_calc/static/js/453.f72acb19.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4efa3bb0.css",
-    "static/js/main.1000cd96.js"
+    "static/css/main.0ce18e6f.css",
+    "static/js/main.6ee4f21b.js"
   ]
 }
