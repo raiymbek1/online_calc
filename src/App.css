@@ -66,35 +66,70 @@ select, input {
   box-sizing: border-box;
 }
 
-/* Основная кнопка Рассчитать */
+/* Общие стили кнопок */
 button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   margin-top: 16px;
   width: 100%;
-  padding: 10px 16px;
-  background: #147bac;
-  color: white;
+  padding: 12px 18px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease; /* плавный переход */
+  transition: 
+    background 0.3s ease, 
+    transform 0.2s ease, 
+    box-shadow 0.3s ease;
 }
 
-button:hover {
-  background: #253d65;
+/* Кнопка Рассчитать */
+.button-group button:first-child {
+  background: linear-gradient(135deg, #147bac, #0d5c87);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(20, 123, 172, 0.3);
+}
+
+.button-group button:first-child:hover {
+  background: linear-gradient(135deg, #0d5c87, #147bac);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(20, 123, 172, 0.4);
+}
+
+.button-group button:first-child:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(20, 123, 172, 0.3);
 }
 
 /* Кнопка Сбросить */
 .button-group button:nth-child(2) {
-  background: #e0e0e0;
-  color: #333;
+  background: #f4f4f4;
+  color: #444;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 .button-group button:nth-child(2):hover {
-  background: #cfcfcf;
-  color: #111;
+  background: #e6e6e6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
 }
+
+.button-group button:nth-child(2):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-group button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* отступ между иконкой и текстом */
+  font-size: 15px;
+}
+.button-group svg {
+  font-size: 18px; /* размер иконки */
+}
+
+
 /* RESULT BLOCK */
 /* loader */
 .loader-wrapper {
@@ -219,4 +254,9 @@ button:hover {
 .input-error-border {
   border-color: #dc2626 !important; /* красный цвет */
   background-color: #fee2e2; /* светло-красный фон */
+}
+
+input.error {
+  border: 1px solid #dc2626 !important;
+  background: #fee2e2;
 }

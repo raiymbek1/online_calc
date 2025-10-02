@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import CustomSelect from "./CustomSelect";
-import logo from "./logo.png"; // путь к твоему логотипу
+import logo from "./logo.png";
+import { FaCalculator, FaRedo } from "react-icons/fa";
+
 
 
 export default function Calculator() {
@@ -233,15 +235,25 @@ if (D2 < 0 || D2 > 10) {
       <div className="form-group">
         <label>Повышающий отраслевой коэффициент (ПОК):</label>
         <input
-  type="number"
-  step="0.001"
-  min="0"
-  max="10"
-  value={pok}
-  onChange={(e) => setPok(e.target.value)}
-  placeholder="Введите значение"
-className={isError && (!pok || pok < 0 || pok > 10) ? "input-error-border" : ""}
-/>
+          type="number"
+          step="0.001"
+          min="0"
+          max="4"
+          value={pok}
+          onChange={(e) => {
+            const val = e.target.value;
+            setPok(val);
+
+            // Проверка на валидность сразу при вводе
+            if (val === "" || (parseFloat(val) >= 0 && parseFloat(val) <= 4)) {
+              setPokError(""); 
+            } else {
+              setPokError("Введите значение от 0 до 4");
+            }
+          }}
+          placeholder="Введите значение"
+          className={pokError ? "error" : ""}
+        />
         {pokError && <div className="input-error">{pokError}</div>}
       </div>
 
@@ -257,9 +269,15 @@ className={isError && (!pok || pok < 0 || pok > 10) ? "input-error-border" : ""}
       </div>
 
       <div className="button-group">
-        <button onClick={handleCalculate}>Рассчитать</button>
-        <button onClick={handleReset}>Сбросить</button>
-      </div>
+  <button onClick={handleCalculate}>
+    <FaCalculator style={{ marginRight: "8px" }} />
+    Рассчитать
+  </button>
+  <button onClick={handleReset}>
+    <FaRedo style={{ marginRight: "8px" }} />
+    Сбросить
+  </button>
+</div>
 
       {loading && <div className="loader-wrapper"><div className="loader"></div></div>}
 
